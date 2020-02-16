@@ -1,6 +1,6 @@
 #include "SubLine.h"
 
-SubLine::SubLine() {
+SubLine::SubLine(const std::string& raw) {
 }
 
 SubLine::~SubLine() {
