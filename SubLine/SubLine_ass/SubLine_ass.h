@@ -1,3 +1,5 @@
+#ifndef INCLUDE_SUBLIME_ASS_H
+#define INCLUDE_SUBLIME_ASS_H
 #include <string>
 #include "../SubLine.h"
 
@@ -17,3 +19,4 @@ class SubLine_ass : public SubLine {
         std::string effect;
         std::string content;
 };
+#endif
