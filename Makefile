@@ -1,6 +1,7 @@
 OBJECTS=SubLine/SubLine.o SubLine/SubLine_ass/SubLine_ass.o \
 		Parser/Parser.o \
 		main.o
+CFLAGS+=-I./CommonCPP
 
 all: substretch.out
 

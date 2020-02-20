@@ -18,7 +18,7 @@ class Parser {
         enum SUB_TYPE detectSubtype(const std::string& subtitleFilePath);
         int countLines(const std::string& subtitleFilePath);
         int parse_ass(const std::string& subtitleFilePath, std::list<SubLine>& out);
-        //parse_srt(const std::string& subtitleFilePath);
+        int parse_srt(const std::string& subtitleFilePath, std::list<SubLine>& out);
 
         std::list<SubLine> _data;
         int _totalLines;

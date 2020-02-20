@@ -1,5 +1,8 @@
 #include "Parser.h"
 #include "../SubLine/SubLine_ass/SubLine_ass.h"
+#include "../CommonCPP/Regexp/Regexp.h"
+#include "../CommonCPP/FileUtils/FileUtils.h"
+#include <iostream>
 
 Parser::Parser() {
     _totalLines = 0;
@@ -20,7 +23,7 @@ int Parser::parse(const std::string& subtitleFilePath) {
             break;
         }
         case SUB_TYPE_SRT: {
-            //ret = parse_srt(subtitleFilePath, _data);
+            ret = parse_srt(subtitleFilePath, _data);
             break;
         }
         case SUB_TYPE_UNKNOWN: {
@@ -35,8 +38,29 @@ int Parser::parse(const std::string& subtitleFilePath) {
 }
 
 int Parser::parse_ass(const std::string& subtitleFilePath, std::list<SubLine>& out) {
-
+    return 0;
 }
+
+int Parser::parse_srt(const std::string& subtitleFilePath, std::list<SubLine>& out) {
+    //std::string pattern = "(?<index>^\\d+$)\\n^(?<startTime>\\d\\d:[0-5]\\d:[0-5]\\d,\\d{1,3}) --> (?<endTime>\\d\\d:[0-5]\\d:[0-5]\\d,\\d{1,3})$\\n(?<text>(?:^.+$\\n?)+)";
+    //std::string pattern = "(\\d+:\\d+:\\d+,\\d+ --> \\d+:\\d+:\\d+,\\d+)\\s+(.+)";
+    std::string pattern = "(\\d+)\\n([\\d:,]+)\\s+-{2}\\>\\s+([\\d:,]+)\\n([\\s\\S]*?(?=\\n{2}|$))";
+    std::string data;
+    int rc = FileUtils::readFile(subtitleFilePath, data);
+    std::vector<std::string> vdata;
+
+    if (rc == 0) {
+        Regexp::search(data, pattern, vdata);
+        std::cout << vdata.size() << "\n";
+        for (int i = 0; i < vdata.size(); i++) {
+            std::cout << i << "--" << vdata.at(i) << "\n";
+        }
+    }
+    
+    return 0;
+}
+
+
 
 enum SUB_TYPE Parser::detectSubtype(const std::string& subtitleFilePath) {
     std::size_t pos = subtitleFilePath.rfind(".");
