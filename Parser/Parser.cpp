@@ -38,12 +38,12 @@ int Parser::parse(const std::string& subtitleFilePath) {
 }
 
 int Parser::parse_ass(const std::string& subtitleFilePath, std::list<SubLine>& out) {
+    // https://www.regextester.com/104838
+    std::string pattern = "^Dialogue:\\s\\d+,\\d+:\\d+:\\d+\\.\\d+,\\d+:\\d+:\\d+\\.\\d+,\\w+,\\w*,\\d+,\\d+,\\d+,\\w*,.*";
     return 0;
 }
 
 int Parser::parse_srt(const std::string& subtitleFilePath, std::list<SubLine>& out) {
-    //std::string pattern = "(?<index>^\\d+$)\\n^(?<startTime>\\d\\d:[0-5]\\d:[0-5]\\d,\\d{1,3}) --> (?<endTime>\\d\\d:[0-5]\\d:[0-5]\\d,\\d{1,3})$\\n(?<text>(?:^.+$\\n?)+)";
-    //std::string pattern = "(\\d+:\\d+:\\d+,\\d+ --> \\d+:\\d+:\\d+,\\d+)\\s+(.+)";
     std::string pattern = "(\\d+)\\n([\\d:,]+)\\s+-{2}\\>\\s+([\\d:,]+)\\n([\\s\\S]*?(?=\\n{2}|$))";
     std::string data;
     int rc = FileUtils::readFile(subtitleFilePath, data);
