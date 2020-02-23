@@ -3,6 +3,7 @@
 #include "../CommonCPP/Regexp/Regexp.h"
 #include "../CommonCPP/FileUtils/FileUtils.h"
 #include <iostream>
+#include <vector>
 
 Parser::Parser() {
     _totalLines = 0;
@@ -39,7 +40,19 @@ int Parser::parse(const std::string& subtitleFilePath) {
 
 int Parser::parse_ass(const std::string& subtitleFilePath, std::list<SubLine>& out) {
     // https://www.regextester.com/104838
-    std::string pattern = "^Dialogue:\\s\\d+,\\d+:\\d+:\\d+\\.\\d+,\\d+:\\d+:\\d+\\.\\d+,\\w+,\\w*,\\d+,\\d+,\\d+,\\w*,.*";
+    std::string pattern = "(?:^|\n)Dialogue:\\s(.*\\d+),(\\d+:\\d+:\\d+\\.\\d+),(\\d+:\\d+:\\d+\\.\\d+),([\\w\\s]+),(\\w*),(\\d+),(\\d+),(\\d+),(\\w*),(.*)";
+    std::string data;
+    int rc = FileUtils::readFile(subtitleFilePath, data);
+    std::vector<std::string> vdata;
+
+    if (rc == 0) {
+        Regexp::search(data, pattern, vdata);
+        std::cout << vdata.size() << "\n";
+        for (int i = 0; i < vdata.size(); i++) {
+            std::cout << i << "--" << vdata.at(i) << "\n";
+        }
+    }
+
     return 0;
 }
 
