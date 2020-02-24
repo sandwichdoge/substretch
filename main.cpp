@@ -15,6 +15,9 @@ int main(int argc, char* argv[])
 
     Parser *pParser = new Parser();
     pParser->parse(target);
+
+    std::list<SubLine> data = pParser->getParsedData();
+    std::cout << "Found " << data.size() << " lines\n";
     
     delete pParser;
     return 0;

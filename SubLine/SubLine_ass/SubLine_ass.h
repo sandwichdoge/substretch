@@ -5,7 +5,7 @@
 
 class SubLine_ass : public SubLine {
     public:
-        SubLine_ass(const std::string& raw);
+        SubLine_ass();
         virtual ~SubLine_ass();
 
         std::string layer;

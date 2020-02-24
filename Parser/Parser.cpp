@@ -2,8 +2,11 @@
 #include "../SubLine/SubLine_ass/SubLine_ass.h"
 #include "../CommonCPP/Regexp/Regexp.h"
 #include "../CommonCPP/FileUtils/FileUtils.h"
+#include "../CommonCPP/StringUtils/StringUtils.h"
 #include <iostream>
 #include <vector>
+
+#define ASS_FILE_COLUMN_COUNT 10
 
 Parser::Parser() {
     _totalLines = 0;
@@ -47,9 +50,14 @@ int Parser::parse_ass(const std::string& subtitleFilePath, std::list<SubLine>& o
 
     if (rc == 0) {
         Regexp::search(data, pattern, vdata);
-        std::cout << vdata.size() << "\n";
-        for (int i = 0; i < vdata.size(); i++) {
-            std::cout << i << "--" << vdata.at(i) << "\n";
+
+        for (std::size_t i = 0; i < vdata.size(); i+= ASS_FILE_COLUMN_COUNT) {
+            // TODO parse "Format" row to see which column stands for which instead of hardcode
+            SubLine_ass sub;
+
+            StringUtils::StringToInteger(vdata.at(1), sub.start_time);
+            
+            out.push_back(sub);
         }
     }
 
@@ -64,7 +72,6 @@ int Parser::parse_srt(const std::string& subtitleFilePath, std::list<SubLine>& o
 
     if (rc == 0) {
         Regexp::search(data, pattern, vdata);
-        std::cout << vdata.size() << "\n";
         for (int i = 0; i < vdata.size(); i++) {
             std::cout << i << "--" << vdata.at(i) << "\n";
         }

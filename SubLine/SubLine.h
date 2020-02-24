@@ -4,7 +4,7 @@
 
 class SubLine {
     public:
-        SubLine(const std::string& raw);
+        SubLine();
         virtual ~SubLine();
 
         std::string content;
