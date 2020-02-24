@@ -18,6 +18,10 @@ int main(int argc, char* argv[])
 
     std::list<SubLine> data = pParser->getParsedData();
     std::cout << "Found " << data.size() << " lines\n";
+
+    for (auto it : data) {
+        std::cout << it.text << "\n";
+    }
     
     delete pParser;
     return 0;

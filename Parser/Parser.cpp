@@ -1,8 +1,10 @@
 #include "Parser.h"
-#include "../SubLine/SubLine_ass/SubLine_ass.h"
 #include "../CommonCPP/Regexp/Regexp.h"
 #include "../CommonCPP/FileUtils/FileUtils.h"
 #include "../CommonCPP/StringUtils/StringUtils.h"
+#include "../SubLine/SubLine_ass/SubLine_ass.h"
+#include "../SubLine/SubLine_srt/SubLine_srt.h"
+
 #include <iostream>
 #include <vector>
 
@@ -51,13 +53,27 @@ int Parser::parse_ass(const std::string& subtitleFilePath, std::list<SubLine>& o
     if (rc == 0) {
         Regexp::search(data, pattern, vdata);
 
-        for (std::size_t i = 0; i < vdata.size(); i+= ASS_FILE_COLUMN_COUNT) {
-            // TODO parse "Format" row to see which column stands for which instead of hardcode
-            SubLine_ass sub;
+        if (vdata.size() % 10 != 0) {
+            // Handle error: regex parsing failure
+            std::cout << "Regex parsing error\n";
+        }
 
-            StringUtils::StringToInteger(vdata.at(1), sub.start_time);
-            
-            out.push_back(sub);
+        for (size_t i = 0; i < vdata.size(); i+= ASS_FILE_COLUMN_COUNT) {
+            // TODO parse "Format" row to see which column stands for which instead of hardcode
+            SubLine_ass *sub = new SubLine_ass;
+
+            StringUtils::StringToInteger(vdata.at(i + 1), sub->start_time);
+            StringUtils::StringToInteger(vdata.at(i + 2), sub->end_time);
+            sub->style = vdata.at(i + 3);
+            sub->name  = vdata.at(i + 4);
+            StringUtils::StringToInteger(vdata.at(i + 5), sub->marginL);
+            StringUtils::StringToInteger(vdata.at(i + 6), sub->marginR);
+            StringUtils::StringToInteger(vdata.at(i + 7), sub->marginV);
+            sub->effect = vdata.at(i + 8);
+            sub->text   = vdata.at(i + 9);
+
+            out.push_back(*sub);
+            delete sub;
         }
     }
 

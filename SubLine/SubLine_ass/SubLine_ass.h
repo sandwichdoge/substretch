@@ -9,14 +9,11 @@ class SubLine_ass : public SubLine {
         virtual ~SubLine_ass();
 
         std::string layer;
-        int start_time; // In milliseconds
-        int end_time;   // In milliseconds
         std::string style;
         std::string name;
         int marginL;
         int marginR;
         int marginV;
         std::string effect;
-        std::string content;
 };
 #endif

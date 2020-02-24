@@ -7,7 +7,7 @@ class SubLine {
         SubLine();
         virtual ~SubLine();
 
-        std::string content;
+        std::string text;
         int start_time; // In milliseconds
         int end_time;   // In milliseconds
 };
