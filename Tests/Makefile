@@ -1,4 +1,4 @@
-OBJECTS=testSubUtils.o \
+OBJECTS=testSubUtils.o ../SubUtils/SubUtils.o \
 		main.o
 
 CFLAGS+=-I../CommonCPP -pthread -I.
