@@ -66,10 +66,11 @@ int Parser::parse_ass(const std::string& subtitleFilePath) {
         // TODO parse "Format" row to see which column stands for which instead of hardcode
         SubLine_ass *sub = new SubLine_ass;
 
+        sub->marked = vdata.at(i);
         SubUtils::hourToMilliseconds(vdata.at(i + 1), sub->start_time);
         SubUtils::hourToMilliseconds(vdata.at(i + 2), sub->end_time);
-        sub->style = vdata.at(i + 3);
-        sub->name  = vdata.at(i + 4);
+        sub->style  = vdata.at(i + 3);
+        sub->name   = vdata.at(i + 4);
         StringUtils::StringToInteger(vdata.at(i + 5), sub->marginL);
         StringUtils::StringToInteger(vdata.at(i + 6), sub->marginR);
         StringUtils::StringToInteger(vdata.at(i + 7), sub->marginV);

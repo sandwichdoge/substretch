@@ -8,6 +8,7 @@ class SubLine_ass : public SubLine {
         SubLine_ass();
         virtual ~SubLine_ass();
 
+        std::string marked;
         std::string layer;
         std::string style;
         std::string name;
