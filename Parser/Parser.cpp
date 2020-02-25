@@ -26,11 +26,13 @@ int Parser::parse(const std::string& subtitleFilePath) {
 
     switch (_subType) {
         case SUB_TYPE_ASS: {
-            ret = parse_ass(subtitleFilePath, _data);
+            ret = parse_ass(subtitleFilePath);
+            _data = (std::list<SubLine>*)&_data_ass;
             break;
         }
         case SUB_TYPE_SRT: {
-            ret = parse_srt(subtitleFilePath, _data);
+            ret = parse_srt(subtitleFilePath);
+            _data = (std::list<SubLine>*)&_data_srt;
             break;
         }
         case SUB_TYPE_UNKNOWN: {
@@ -44,7 +46,7 @@ int Parser::parse(const std::string& subtitleFilePath) {
     return ret;
 }
 
-int Parser::parse_ass(const std::string& subtitleFilePath, std::list<SubLine>& out) {
+int Parser::parse_ass(const std::string& subtitleFilePath) {
     // https://www.regextester.com/104838
     std::string pattern = "(?:^|\n)Dialogue:\\s(.*\\d+),(\\d+:\\d+:\\d+\\.\\d+),(\\d+:\\d+:\\d+\\.\\d+),([\\w\\s]+),(\\w*),(\\d+),(\\d+),(\\d+),(\\w*),(.*)";
     std::string data;
@@ -73,7 +75,7 @@ int Parser::parse_ass(const std::string& subtitleFilePath, std::list<SubLine>& o
             sub->effect = vdata.at(i + 8);
             sub->text   = vdata.at(i + 9);
 
-            out.push_back(*sub);
+            _data_ass.push_back(*sub);
             delete sub;
         }
     }
@@ -81,7 +83,7 @@ int Parser::parse_ass(const std::string& subtitleFilePath, std::list<SubLine>& o
     return 0;
 }
 
-int Parser::parse_srt(const std::string& subtitleFilePath, std::list<SubLine>& out) {
+int Parser::parse_srt(const std::string& subtitleFilePath) {
     std::string pattern = "(\\d+)\\n([\\d:,]+)\\s+-{2}\\>\\s+([\\d:,]+)\\n([\\s\\S]*?(?=\\n{2}|$))";
     std::string data;
     int rc = FileUtils::readFile(subtitleFilePath, data);
@@ -131,7 +133,7 @@ int Parser::countLines(const std::string& subtitleFilePath) {
     return ret;
 }
 
-std::list<SubLine> Parser::getParsedData() {
+std::list<SubLine>* Parser::getParsedData() {
     return _data;
 }
 
