@@ -18,14 +18,13 @@ class Parser {
         std::list<SubLine>* getParsedData();
     private:
         enum SUB_TYPE detectSubtype(const std::string& subtitleFilePath);
-        int countLines(const std::string& subtitleFilePath);
         int parse_ass(const std::string& subtitleFilePath);
         int parse_srt(const std::string& subtitleFilePath);
 
+        std::string _raw;
         std::list<SubLine>* _data;
         std::list<SubLine_srt> _data_srt;
         std::list<SubLine_ass> _data_ass;
-        int _totalLines;
         enum SUB_TYPE _subType;
         bool _isDataReady;
 };
