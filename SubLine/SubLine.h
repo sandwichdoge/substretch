@@ -8,7 +8,7 @@ class SubLine {
         virtual ~SubLine();
 
         std::string text;
-        int start_time; // In milliseconds
-        int end_time;   // In milliseconds
+        unsigned int start_time; // In milliseconds
+        unsigned int end_time;   // In milliseconds
 };
 #endif

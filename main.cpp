@@ -21,6 +21,7 @@ int main(int argc, char* argv[])
 
     for (auto it : data) {
         std::cout << it.text << "\n";
+        std::cout << it.start_time << "\n";
     }
     
     delete pParser;

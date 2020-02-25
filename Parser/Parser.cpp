@@ -4,6 +4,7 @@
 #include "../CommonCPP/StringUtils/StringUtils.h"
 #include "../SubLine/SubLine_ass/SubLine_ass.h"
 #include "../SubLine/SubLine_srt/SubLine_srt.h"
+#include "../SubUtils/SubUtils.h"
 
 #include <iostream>
 #include <vector>
@@ -62,8 +63,8 @@ int Parser::parse_ass(const std::string& subtitleFilePath, std::list<SubLine>& o
             // TODO parse "Format" row to see which column stands for which instead of hardcode
             SubLine_ass *sub = new SubLine_ass;
 
-            StringUtils::StringToInteger(vdata.at(i + 1), sub->start_time);
-            StringUtils::StringToInteger(vdata.at(i + 2), sub->end_time);
+            SubUtils::hourToMilliseconds(vdata.at(i + 1), sub->start_time);
+            SubUtils::hourToMilliseconds(vdata.at(i + 2), sub->end_time);
             sub->style = vdata.at(i + 3);
             sub->name  = vdata.at(i + 4);
             StringUtils::StringToInteger(vdata.at(i + 5), sub->marginL);
