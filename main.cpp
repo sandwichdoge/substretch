@@ -2,6 +2,7 @@
 #include <list>
 #include <fstream>
 #include "Parser/Parser.h"
+#include "Optimizer/Optimizer.h"
 #include "SubLine/SubLine.h"
 #include "SubLine/SubLine_ass/SubLine_ass.h"
 #include "SubLine/SubLine_srt/SubLine_srt.h"
@@ -23,31 +24,12 @@ int main(int argc, char* argv[])
     }
 
     std::list<SubLine>* data = pParser->getParsedData();
-    std::cout << "Found " << data->size() << " lines\n";
-
     enum SUB_TYPE subType = pParser->getParsedSubtype();
-    switch (subType) {
-        case (SUB_TYPE_ASS): {
-            std::list<SubLine_ass>* list = (std::list<SubLine_ass>*)data;
-            for (auto it : *list) {
-                std::cout << it.text << ":";
-                std::cout << it.start_time << ":";
-                std::cout << it.style << "\n";
-            }
-            break;
-        }
-        case (SUB_TYPE_SRT): {
-            std::list<SubLine_srt>* list = (std::list<SubLine_srt>*)data;
-            for (auto it : *list) {
-                std::cout << it.index << ":";
-                std::cout << it.text << ":";
-                std::cout << it.start_time << "\n";
-            }
-            break;
-        }
-    }
+    Optimizer *pOptimizer = new Optimizer();
+    pOptimizer->optimize(data, subType);
 
-    
+
+    delete pOptimizer;
     delete pParser;
     return 0;
 }

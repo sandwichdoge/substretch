@@ -66,6 +66,7 @@ int Parser::parse_ass(const std::string& subtitleFilePath) {
         // TODO parse "Format" row to see which column stands for which instead of hardcode
         SubLine_ass *sub = new SubLine_ass;
 
+        sub->subType = SUB_TYPE_ASS;
         sub->marked = vdata.at(i);
         SubUtils::hourToMilliseconds(vdata.at(i + 1), sub->start_time);
         SubUtils::hourToMilliseconds(vdata.at(i + 2), sub->end_time);
@@ -98,6 +99,7 @@ int Parser::parse_srt(const std::string& subtitleFilePath) {
     for (size_t i = 0; i < vdata.size(); i+= TOTAL_SUB_FIELDS_SRT) {
         SubLine_srt *sub = new SubLine_srt;
 
+        sub->subType = SUB_TYPE_SRT;
         StringUtils::StringToInteger(vdata.at(i + 0), sub->index);
         SubUtils::hourToMilliseconds(vdata.at(i + 1), sub->start_time);
         SubUtils::hourToMilliseconds(vdata.at(i + 2), sub->end_time);

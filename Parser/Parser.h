@@ -6,8 +6,6 @@
 #include "../SubLine/SubLine_srt/SubLine_srt.h"
 #include "../SubLine/SubLine_ass/SubLine_ass.h"
 
-enum SUB_TYPE {SUB_TYPE_UNKNOWN = 0, SUB_TYPE_SRT, SUB_TYPE_ASS};
-
 class Parser {
     public:
         Parser();
