@@ -1,0 +1,5 @@
+tl;dr
+- 0.40s per word.
+- Combine short sentences (fewer than 10 words combined).
+- If gap is 2s or more, leave at least 1s. Gaps must be preserved no matter what.
+- Support multiple subtitle file formats.
