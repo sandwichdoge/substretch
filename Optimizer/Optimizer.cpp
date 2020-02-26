@@ -1,30 +1,31 @@
 #include "Optimizer.h"
 #include <iostream>
 
-Optimizer::Optimizer() {}
+Optimizer::Optimizer(std::list<SubLine> *data, enum SUB_TYPE subType) {
+    _data = data;
+    _subType = subType;
+}
+
 Optimizer::~Optimizer() {}
 
-int Optimizer::optimize(std::list<SubLine> *data, enum SUB_TYPE subType) {
-    switch (subType) {
-        case (SUB_TYPE_ASS): {
-            std::list<SubLine_ass>* list = (std::list<SubLine_ass>*)data;
-            for (auto it : *list) {
-                std::cout << it.text << ":";
-                std::cout << it.start_time << ":";
-                std::cout << it.style << "\n";
-            }
-            break;
-        }
-        case (SUB_TYPE_SRT): {
-            std::list<SubLine_srt>* list = (std::list<SubLine_srt>*)data;
-            for (auto it : *list) {
-                std::cout << it.index << ":";
-                std::cout << it.text << ":";
-                std::cout << it.start_time << "\n";
-            }
-            break;
-        }
+int Optimizer::optimize(int whatdo) {
+    if (whatdo & OPTIMIZING_PARAM_STRETCH_TIME) {
+        stretchTime();
+    }
+
+    if (whatdo & OPTIMIZING_PARAM_MERGE_LINES) {
+        mergeShortLines();
     }
 
     return 0;
+}
+
+int Optimizer::stretchTime() {
+    for (auto it : *_data) {
+        std::cout << it.text << "\n";
+    }
+}
+
+int Optimizer::mergeShortLines() {
+    
 }
