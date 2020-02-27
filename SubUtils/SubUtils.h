@@ -9,6 +9,10 @@ public:
     // Will try all patterns. 
     // Return false if fail to parse
     static bool hourToMilliseconds(const std::string& timestr, unsigned int& out);
+
+    // Count words in a sentence, separated by space/linebreak.
+    static int countWords(const std::string& sentence);
+private:
     static bool hourToMilliseconds_srt(const std::string& timestr, unsigned int& out);
     static bool hourToMilliseconds_ass(const std::string& timestr, unsigned int& out);
 };

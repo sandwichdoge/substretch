@@ -58,3 +58,10 @@ bool SubUtils::hourToMilliseconds(const std::string& timestr, unsigned int& out)
         return false;
     }
 }
+
+int SubUtils::countWords(const std::string& sentence) {
+    int totalSpace = StringUtils::charCount(sentence, ' ');
+    int totalLinebreaks = StringUtils::charCount(sentence, '\n');
+
+    return totalLinebreaks + totalSpace + 1;
+}
