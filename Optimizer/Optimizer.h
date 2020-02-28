@@ -14,9 +14,10 @@ class Optimizer {
         virtual ~Optimizer();
 
         int optimize(int whatdo);
-        std::vector<SubLine>* getOptimizedSub() {return &_data;};
     private:
         std::vector<SubLine> _data;
+        std::vector<SubLine_srt>* _data_srt;
+        std::vector<SubLine_ass>* _data_ass;
         enum SUB_TYPE _subType;
         int stretchTime();
         int mergeShortLines();

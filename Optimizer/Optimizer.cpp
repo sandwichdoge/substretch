@@ -7,9 +7,11 @@ Optimizer::Optimizer(std::vector<SubLine> *data, enum SUB_TYPE subType) {
     switch (subType) {
         case (SUB_TYPE_SRT):
             _data = std::vector<SubLine>(((std::vector<SubLine_srt>*)data)->begin(), ((std::vector<SubLine_srt>*)data)->end());
+            _data_srt = (std::vector<SubLine_srt>*)data;
             break;
         case (SUB_TYPE_ASS):
             _data = std::vector<SubLine>(((std::vector<SubLine_ass>*)data)->begin(), ((std::vector<SubLine_ass>*)data)->end());
+            _data_ass = (std::vector<SubLine_ass>*)data;
             break;
         default:
             break;
@@ -33,6 +35,32 @@ int Optimizer::optimize(int whatdo) {
         mergeShortLines();
     }
 
+    if (!_data_ass || !_data_srt) {
+        return -2; // Invalid sub type
+    }
+
+    // Apply optimized timing to original data
+    switch (_subType) {
+        case (SUB_TYPE_ASS):
+            for (std::size_t i = 0; i < _data.size(); i++) {
+                _data_ass->at(i).start_time = _data.at(i).start_time;
+                _data_ass->at(i).end_time = _data.at(i).end_time;
+                _data_ass->at(i).text = _data.at(i).text;
+            }
+            _data_ass->resize(_data.size());
+            break;
+        case (SUB_TYPE_SRT):
+            for (std::size_t i = 0; i < _data.size(); i++) {
+                _data_srt->at(i).start_time = _data.at(i).start_time;
+                _data_srt->at(i).end_time = _data.at(i).end_time;
+                _data_srt->at(i).text = _data.at(i).text;
+            }
+            _data_srt->resize(_data.size());
+            break;
+        default:
+            return -3;
+    }
+    
     return 0;
 }
 
