@@ -4,12 +4,12 @@ OBJECTS=SubLine/SubLine.o \
 		Optimizer/Optimizer.o \
 		SubUtils/SubUtils.o \
 		main.o
-CFLAGS+=-I./CommonCPP
+CFLAGS+=-I./CommonCPP -fsanitize=address
 
 all: substretch.out
 
 substretch.out: $(OBJECTS)
-	$(CXX) $^ -o $@ $(LDFLAGS)
+	$(CXX) $^ -o $@ $(LDFLAGS) -fsanitize=address
 
 %.o: %.cpp
 	$(CXX) -c $(CFLAGS) $< -o $@

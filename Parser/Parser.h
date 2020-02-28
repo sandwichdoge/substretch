@@ -17,8 +17,8 @@ class Parser {
         std::vector<SubLine>* getParsedData();
     private:
         enum SUB_TYPE detectSubtype(const std::string& subtitleFilePath);
-        int parse_ass(const std::string& subtitleFilePath);
-        int parse_srt(const std::string& subtitleFilePath);
+        int parse_ass();
+        int parse_srt();
 
         std::string _raw;
         std::vector<SubLine>* _data;

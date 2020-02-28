@@ -65,3 +65,9 @@ int SubUtils::countWords(const std::string& sentence) {
 
     return totalLinebreaks + totalSpace + 1;
 }
+
+int SubUtils::CRLFtoLF(std::string& str) {
+    StringUtils::stringReplace(str, "\r\n", "\n");
+
+    return 0;
+}

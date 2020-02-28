@@ -26,8 +26,6 @@ int main(int argc, char* argv[])
     std::vector<SubLine>* data = pParser->getParsedData();
     enum SUB_TYPE subType = pParser->getParsedSubtype();
 
-    std::cout << data->size() << "\n";
-
     Optimizer *pOptimizer = new Optimizer(data, subType);
     pOptimizer->optimize(OPTIMIZING_PARAM_MERGE_LINES | OPTIMIZING_PARAM_STRETCH_TIME);
 

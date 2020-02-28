@@ -23,16 +23,17 @@ int Parser::parse(const std::string& subtitleFilePath) {
     int ret = 0;
     _subType = detectSubtype(subtitleFilePath);
     int rc = FileUtils::readFile(subtitleFilePath, _raw);
+    SubUtils::CRLFtoLF(_raw);
 
     if (rc == 0) {
         switch (_subType) {
             case SUB_TYPE_ASS: {
-                ret = parse_ass(subtitleFilePath);
+                ret = parse_ass();
                 _data = (std::vector<SubLine>*)&_data_ass;
                 break;
             }
             case SUB_TYPE_SRT: {
-                ret = parse_srt(subtitleFilePath);
+                ret = parse_srt();
                 _data = (std::vector<SubLine>*)&_data_srt;
                 break;
             }
@@ -51,7 +52,7 @@ int Parser::parse(const std::string& subtitleFilePath) {
     return ret;
 }
 
-int Parser::parse_ass(const std::string& subtitleFilePath) {
+int Parser::parse_ass() {
     // https://www.regextester.com/104838
     std::string pattern = "(?:^|\n)Dialogue:\\s(.*\\d+),(\\d+:\\d+:\\d+\\.\\d+),(\\d+:\\d+:\\d+\\.\\d+),([\\w\\s]+),(\\w*),(\\d+),(\\d+),(\\d+),(\\w*),(.*)";
     std::vector<std::string> vdata;
@@ -86,7 +87,7 @@ int Parser::parse_ass(const std::string& subtitleFilePath) {
     return 0;
 }
 
-int Parser::parse_srt(const std::string& subtitleFilePath) {
+int Parser::parse_srt() {
     std::string pattern = "(\\d+)\\n([\\d:,]+)\\s+-{2}\\>\\s+([\\d:,]+)\\n([\\s\\S]*?(?=\\n{2}|$))";
     std::vector<std::string> vdata;
     Regexp::search(_raw, pattern, vdata);
@@ -95,6 +96,8 @@ int Parser::parse_srt(const std::string& subtitleFilePath) {
         // Handle error: regex parsing failure
         std::cout << "Regex parsing error\n";
     }
+
+    std::cout << "Found:" << vdata.size() << "\n";
 
     for (size_t i = 0; i < vdata.size(); i+= TOTAL_SUB_FIELDS_SRT) {
         SubLine_srt *sub = new SubLine_srt;

@@ -12,6 +12,8 @@ public:
 
     // Count words in a sentence, separated by space/linebreak.
     static int countWords(const std::string& sentence);
+
+    static int CRLFtoLF(std::string& str);
 private:
     static bool hourToMilliseconds_srt(const std::string& timestr, unsigned int& out);
     static bool hourToMilliseconds_ass(const std::string& timestr, unsigned int& out);
