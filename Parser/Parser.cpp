@@ -69,8 +69,8 @@ int Parser::parse_ass() {
 
         sub->subType = SUB_TYPE_ASS;
         sub->marked = vdata.at(i);
-        SubUtils::hourToMilliseconds(vdata.at(i + 1), sub->start_time);
-        SubUtils::hourToMilliseconds(vdata.at(i + 2), sub->end_time);
+        SubUtils::hourToMilliseconds(vdata.at(i + 1), sub->start_time, SUB_TYPE_ASS);
+        SubUtils::hourToMilliseconds(vdata.at(i + 2), sub->end_time, SUB_TYPE_ASS);
         sub->style  = vdata.at(i + 3);
         sub->name   = vdata.at(i + 4);
         StringUtils::StringToInteger(vdata.at(i + 5), sub->marginL);
@@ -97,15 +97,13 @@ int Parser::parse_srt() {
         std::cout << "Regex parsing error\n";
     }
 
-    std::cout << "Found:" << vdata.size() << "\n";
-
     for (size_t i = 0; i < vdata.size(); i+= TOTAL_SUB_FIELDS_SRT) {
         SubLine_srt *sub = new SubLine_srt;
 
         sub->subType = SUB_TYPE_SRT;
         StringUtils::StringToInteger(vdata.at(i + 0), sub->index);
-        SubUtils::hourToMilliseconds(vdata.at(i + 1), sub->start_time);
-        SubUtils::hourToMilliseconds(vdata.at(i + 2), sub->end_time);
+        SubUtils::hourToMilliseconds(vdata.at(i + 1), sub->start_time, SUB_TYPE_SRT);
+        SubUtils::hourToMilliseconds(vdata.at(i + 2), sub->end_time, SUB_TYPE_SRT);
         sub->text = vdata.at(i + 3);
 
         _data_srt.push_back(*sub);

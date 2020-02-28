@@ -1,13 +1,13 @@
 OBJECTS=testSubUtils.o ../SubUtils/SubUtils.o \
 		main.o
 
-CFLAGS+=-I../CommonCPP -pthread -I.
+CFLAGS+=-I../CommonCPP -pthread -I. -fsanitize=address
 
 all: runtests.out
 	./runtests.out
 
 runtests.out: $(OBJECTS)
-	$(CXX) $^ -o $@ $(LDFLAGS) libgtest.a -pthread
+	$(CXX) $^ -o $@ $(LDFLAGS) libgtest.a -pthread -fsanitize=address
 
 %.o: %.cpp
 	$(CXX) -c $(CFLAGS) $< -o $@

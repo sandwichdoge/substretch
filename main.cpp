@@ -17,6 +17,7 @@ int main(int argc, char* argv[])
         return -1;
     }
 
+    std::cout << "Parsing..\n";
     Parser *pParser = new Parser();
     int rc = pParser->parse(target);
     if (rc != 0) {  // Parsing failure
@@ -26,6 +27,7 @@ int main(int argc, char* argv[])
     std::vector<SubLine>* data = pParser->getParsedData();
     enum SUB_TYPE subType = pParser->getParsedSubtype();
 
+    std::cout << "Optimizing..\n";
     Optimizer *pOptimizer = new Optimizer(data, subType);
     pOptimizer->optimize(OPTIMIZING_PARAM_MERGE_LINES | OPTIMIZING_PARAM_STRETCH_TIME);
 
