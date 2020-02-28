@@ -28,12 +28,12 @@ int Parser::parse(const std::string& subtitleFilePath) {
         switch (_subType) {
             case SUB_TYPE_ASS: {
                 ret = parse_ass(subtitleFilePath);
-                _data = (std::list<SubLine>*)&_data_ass;
+                _data = (std::vector<SubLine>*)&_data_ass;
                 break;
             }
             case SUB_TYPE_SRT: {
                 ret = parse_srt(subtitleFilePath);
-                _data = (std::list<SubLine>*)&_data_srt;
+                _data = (std::vector<SubLine>*)&_data_srt;
                 break;
             }
             case SUB_TYPE_UNKNOWN: {
@@ -132,7 +132,7 @@ enum SUB_TYPE Parser::detectSubtype(const std::string& subtitleFilePath) {
     return ret;
 }
 
-std::list<SubLine>* Parser::getParsedData() {
+std::vector<SubLine>* Parser::getParsedData() {
     return _data;
 }
 
