@@ -45,7 +45,7 @@ int Builder::build_srt(std::vector<SubLine_srt> *data) {
         sentence += fmt_end;
         sentence += '\n';
         sentence += data->at(i).text;
-        sentence += '\n';
+        sentence += "\n\n";
 
         _raw += sentence;
     }
@@ -54,5 +54,28 @@ int Builder::build_srt(std::vector<SubLine_srt> *data) {
 }
 
 int Builder::build_ass(std::vector<SubLine_ass> *data) {
+    std::string fmt_start; // Formated time
+    std::string fmt_end; // Formated time
+
+    _raw = "Format: Marked, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text\n";
+    for (std::size_t i = 0; i < data->size(); i++) {
+        SubUtils::millisecondsToHour(data->at(i).start_time, fmt_start, _subType);
+        SubUtils::millisecondsToHour(data->at(i).end_time, fmt_end, _subType);
+        
+        std::string sentence = "Dialogue: ";
+        sentence += data->at(i).marked + ',';
+        sentence += fmt_start + ',';
+        sentence += fmt_end + ',';
+        sentence += data->at(i).style + ',';
+        sentence += data->at(i).name + ',';
+        sentence += StringUtils::intToString(data->at(i).marginL) + ',';
+        sentence += StringUtils::intToString(data->at(i).marginR) + ',';
+        sentence += StringUtils::intToString(data->at(i).marginV) + ',';
+        sentence += data->at(i).effect + ',';
+        sentence += data->at(i).text + '\n';
+
+        _raw += sentence;
+    }
+
     return 0;
 }

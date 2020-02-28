@@ -73,9 +73,12 @@ int SubUtils::CRLFtoLF(std::string& str) {
 }
 
 bool SubUtils::millisecondsToHour(unsigned int ms, std::string& out, enum SUB_TYPE subType) {
+    int remain = 0;
     int h = ms / 3600000;
-    int m = ms / 60000;
-    int s = ms / 1000;
+    remain = ms % 3600000;
+    int m = remain / 60000;
+    remain = remain % 60000;
+    int s = remain / 1000;
     int ms_carry = ms % 1000;
 
     std::string h_s = StringUtils::intToString(h);
