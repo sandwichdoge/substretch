@@ -30,7 +30,17 @@ int main(int argc, char* argv[])
     std::cout << "Optimizing..\n";
     Optimizer *pOptimizer = new Optimizer(data, subType);
     pOptimizer->optimize(OPTIMIZING_PARAM_MERGE_LINES | OPTIMIZING_PARAM_STRETCH_TIME);
+    std::vector<SubLine>* optimized = pOptimizer->getOptimizedSub();
 
+    // Apply optimized timing to original data
+    for (std::size_t i = 0; i < optimized->size(); i++) {
+        std::cout << i << "\n";
+        //data->at(i).start_time = optimized->at(i).start_time;
+        //data->at(i).end_time = optimized->at(i).end_time;
+        //data->at(i).text = optimized->at(i).text;
+        std::cout << data->at(i).text << " = " << optimized->at(i).text << "\n";
+    }
+    //data->resize(optimized->size());
 
     delete pOptimizer;
     delete pParser;

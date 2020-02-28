@@ -14,6 +14,7 @@ class Optimizer {
         virtual ~Optimizer();
 
         int optimize(int whatdo);
+        std::vector<SubLine>* getOptimizedSub() {return &_data;};
     private:
         std::vector<SubLine> _data;
         enum SUB_TYPE _subType;

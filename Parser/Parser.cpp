@@ -29,7 +29,7 @@ int Parser::parse(const std::string& subtitleFilePath) {
         switch (_subType) {
             case SUB_TYPE_ASS: {
                 ret = parse_ass();
-                _data = (std::vector<SubLine>*)&_data_ass;
+                _data = (std::vector<SubLine>*)&_data_ass;                
                 break;
             }
             case SUB_TYPE_SRT: {
