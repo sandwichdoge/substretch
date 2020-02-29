@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
         return -1;
     }
 
-    std::cerr << "Parsing..\n";
+    // Parse input file
     Parser *pParser = new Parser();
     int rc = pParser->parse(target);
     if (rc != 0) {  // Parsing failure
@@ -28,15 +28,22 @@ int main(int argc, char* argv[])
     std::vector<SubLine>* data = pParser->getParsedData();
     enum SUB_TYPE subType = pParser->getParsedSubtype();
 
-    std::cerr << "Optimizing..\n";
-    Optimizer *pOptimizer = new Optimizer(data, subType);
-    pOptimizer->optimize(OPTIMIZING_PARAM_MERGE_LINES | OPTIMIZING_PARAM_STRETCH_TIME);
+    // Optimize parsed subtitle
+    Optimizer *pOptimizer = new Optimizer();
+    struct OptimizerConfigs conf = {.stretchTime_msPerWord = 400};
+    pOptimizer->setConfig(conf);
+    pOptimizer->optimize(data, subType, OPTIMIZING_PARAM_MERGE_LINES | OPTIMIZING_PARAM_STRETCH_TIME);
 
+    // Rebuild optimized subtitle
     Builder* pBuilder = new Builder();
     pBuilder->build(data, subType);
     std::string raw = pBuilder->getResult();
+
+    // Print final result to stdout
     std::cout << raw << "\n";
 
+    // Clean up
+    delete pBuilder;
     delete pOptimizer;
     delete pParser;
     return 0;
