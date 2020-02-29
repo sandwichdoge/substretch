@@ -5,9 +5,12 @@ OBJECTS=SubLine/SubLine.o \
 		Builder/Builder.o \
 		SubUtils/SubUtils.o \
 		main.o
-CFLAGS+=-I./CommonCPP -fsanitize=address
+CFLAGS+=-I./CommonCPP
 
 all: substretch.out
+
+debug: CFLAGS+= -DDEBUG -g -fsanitize=address
+debug: all
 
 substretch.out: $(OBJECTS)
 	$(CXX) $^ -o $@ $(LDFLAGS) -fsanitize=address

@@ -6,6 +6,9 @@ CFLAGS+=-I../CommonCPP -pthread -I. -fsanitize=address
 all: runtests.out
 	./runtests.out
 
+debug: CFLAGS+= -DDEBUG -g -fsanitize=address
+debug: all
+
 runtests.out: $(OBJECTS)
 	$(CXX) $^ -o $@ $(LDFLAGS) libgtest.a -pthread -fsanitize=address
 
