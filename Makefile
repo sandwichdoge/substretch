@@ -10,10 +10,11 @@ CFLAGS+=-I./CommonCPP
 all: substretch.out
 
 debug: CFLAGS+= -DDEBUG -g -fsanitize=address
+debug: LDFLAGS+= -g -fsanitize=address
 debug: all
 
 substretch.out: $(OBJECTS)
-	$(CXX) $^ -o $@ $(LDFLAGS) -fsanitize=address
+	$(CXX) $^ -o $@ $(LDFLAGS)
 
 %.o: %.cpp
 	$(CXX) -c $(CFLAGS) $< -o $@
