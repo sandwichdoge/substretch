@@ -9,7 +9,9 @@
 #include "SubLine/SubLine.h"
 #include "SubLine/SubLine_ass/SubLine_ass.h"
 #include "SubLine/SubLine_srt/SubLine_srt.h"
-#include "StringUtils/StringUtils.h"
+#include "CommonCPP/StringUtils/StringUtils.h"
+
+#define DEFAULT_MS_PER_WORD 500
 
 void show_help() {
     printf("-w <milliseconds>\t\tHow many milliseconds per word to stretch a sentence.\n"
@@ -20,7 +22,7 @@ void show_help() {
 int main(int argc, char* argv[])
 {
     std::string target;
-    int msPerWord = 400;
+    int msPerWord = DEFAULT_MS_PER_WORD;
 
     // Process cmdline arguments
     if (argc < 2) {

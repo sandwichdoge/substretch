@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 
-#define DEFAULT_MS_PER_WORD 400
+#define DEFAULT_MS_PER_WORD 500
 
 Optimizer::Optimizer() {
     _configs.stretchTime_msPerWord = DEFAULT_MS_PER_WORD; 
@@ -68,6 +68,8 @@ int Optimizer::finish() {
         default:
             return -3;
     }
+
+    return 0;
 }
 
 int Optimizer::stretchTime() {
