@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 
-#define DEFAULT_MS_PER_WORD 400
+#define DEFAULT_MS_PER_WORD 500
 
 Optimizer::Optimizer() {
     _configs.stretchTime_msPerWord = DEFAULT_MS_PER_WORD; 
@@ -68,22 +68,28 @@ int Optimizer::finish() {
         default:
             return -3;
     }
+
+    return 0;
 }
 
 int Optimizer::stretchTime() {
     for (std::size_t i = 0; i < _data.size() - 1; i++) { // No need to stretch last line
         int totalWords = SubUtils::countWords(_data.at(i).text);
-        unsigned int newDuration = totalWords * _configs.stretchTime_msPerWord; // Milliseconds
-        unsigned int currentStart = _data.at(i).start_time;
-        unsigned int newEnd = currentStart + newDuration;
         unsigned int nextStart = _data.at(i + 1).start_time;
+
+        unsigned int currentStart = _data.at(i).start_time;
+        unsigned int newDuration = totalWords * _configs.stretchTime_msPerWord; // Milliseconds        
+        unsigned int newEnd = currentStart + newDuration;
 
         // If new duration exceeds next line's start_time, cut new end_time to next line's start_time.
         if (newEnd >= nextStart) {
             newEnd = nextStart - 100;
         }
 
-        _data.at(i).end_time = newEnd;
+        unsigned int currentDuration = _data.at(i).end_time - _data.at(i).start_time;
+        if (newDuration > currentDuration) {
+            _data.at(i).end_time = newEnd;
+        }
     }
 
     return 0;
