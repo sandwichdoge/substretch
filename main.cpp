@@ -14,7 +14,8 @@
 void show_help() {
     printf("-w <milliseconds>\t\tHow many milliseconds per word to stretch a sentence.\n"
     "-i <SubtileFile>\t\tPath to input subtitle file.\n"
-    "-h\t\t\t\tShow help.\n");
+    "-h\t\t\t\tShow help.\n\n"
+    "Example: ./substretch.out -i film.srt -w 500\n");
 }
 
 int main(int argc, char* argv[])
