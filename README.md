@@ -5,6 +5,8 @@ Output to stdout.
 
 Currently supported file formats: .srt, .ass.
 
+![Demo](doc/demo.png)
+
 ## Building 
 ```
 make

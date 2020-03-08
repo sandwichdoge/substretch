@@ -83,7 +83,7 @@ int Optimizer::stretchTime() {
 
         // If new duration exceeds next line's start_time, cut new end_time to next line's start_time.
         if (newEnd >= nextStart) {
-            newEnd = nextStart - 100;
+            newEnd = nextStart - 50;
         }
 
         unsigned int currentDuration = _data.at(i).end_time - _data.at(i).start_time;
